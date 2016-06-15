@@ -7,15 +7,14 @@ using namespace std;
 
 int main(){
     int opcao;
-
-    Expressao *exp = new Expressao();
-    Usuario *user = new Usuario();
+	string palavra;    
+	FILA *fila = NULL;
+    Transicao *trans = new Transicao();
 
     do{
         cout << endl << "---------------------------------------------" << endl;
         cout << "\t MENU PRINCIPAL" << endl;
         cout << "---------------------------------------------" << endl;
-        cout << " 2 -- VISUALIZAR AUTÔMATO" << endl;
         cout << " 3 -- FUNCAO DE TRANSICAO ESTENDIDA" << endl;
         cout << " 0 -- SAIR " << endl;
         cout << "---------------------------------------------" << endl;
@@ -26,16 +25,19 @@ int main(){
         switch(opcao){
             case 1:
                 cout << endl << "---------------------------------------------" << endl;
-                cout << "\t DEFININDO AUTÔMATO " << endl;
+                cout << "\t FUNÇÃO DE TRANSICAO ESTENDIDA " << endl;
                 cout << "---------------------------------------------" << endl;
-                user->definindoAutomato();
+                cout << " PALAVRA: ";
+                cin >> palavra;  
+                cout << "---------------------------------------------" << endl << endl;
+                trans->transicaoEstendida(fila, palavra);
                 
                 break;
             case 2:
                 cout << endl << "---------------------------------------------" << endl;
                 cout << "\t VISUALIZAÇÃO DE AUTÔMATOS" << endl;
                 cout << "---------------------------------------------" << endl;
-                exp->mostrarAutomato();
+                //trans->mostrarAutomato();
                 break;
             case 0:
                 cout << "PROGRAMA ENCERRADO COM SUCESSO!" << endl;
