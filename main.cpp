@@ -8,7 +8,7 @@ using namespace std;
 int main(){
     int opcao;
 	string palavra;    
-	FILA *fila = NULL;
+	/*FILA *fila = NULL;*/
     Transicao *trans = new Transicao();
 
     do{
@@ -30,7 +30,7 @@ int main(){
                 cout << " PALAVRA: ";
                 cin >> palavra;  
                 cout << "---------------------------------------------" << endl << endl;
-                trans->transicaoEstendida(fila, palavra);
+                trans->funcaoTransicaoEstendida(palavra);
                 
                 break;
             case 2:
