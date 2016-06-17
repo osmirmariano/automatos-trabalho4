@@ -6,7 +6,7 @@ using namespace std;
 class Transicao{
     public:
         typedef struct {
-            int indice[];//Para armazenar os estados 
+            int indice[];//Para armazenar os estados
             int quantidade;
         }TRANS;
 
@@ -26,7 +26,7 @@ class Transicao{
 
         ~Transicao();
 
-        void queue(FILA *fila){
+        void queue(FILA *fila){ // Enfileirar
             NO_FILA *novo = new NO_FILA();
             if(novo == NULL)
                 cout << "Não existe memória" << endl;
@@ -42,7 +42,7 @@ class Transicao{
             }
         }
 
-        void dequeue (FILA *fila){
+        void dequeue (FILA *fila){ //Desenfileirar
             NO_FILA *aux = new NO_FILA();
             if(aux == NULL)
                 cout << "Fila Vazia" << endl;
@@ -66,5 +66,5 @@ class Transicao{
                  cout << "PALAVRA: " << palavra[x] << endl;
             }
         }
-    
+
 };
