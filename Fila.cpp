@@ -22,13 +22,14 @@ class Fila{
 
     public:
 		Fila(){
-			
+
 		};
 
 		~Fila();
 
 		void enfileirar (FILA *fila){ // Enfileirar // queue
             NO_FILA *novo = new NO_FILA();
+
 
             if(novo == NULL)
                 cout << "Não existe nada cadastrado" << endl;
@@ -47,7 +48,7 @@ class Fila{
 
         void desenfileirar (FILA *fila){ //Desenfileirar
 	        NO_FILA *aux = new NO_FILA();
-	        
+
 	        if(aux == NULL)
 	            cout << "Fila Vazia" << endl;
 	        else{
@@ -61,5 +62,5 @@ class Fila{
 	                fila->fim = fila->fim->prox;
         	}
         };
-	
+
 };

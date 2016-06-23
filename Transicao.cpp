@@ -5,16 +5,16 @@ using namespace std;
 
 class Transicao{
     public:
-        
+
 
     public:
         Transicao(){
-            
+
         };
 
         ~Transicao();
 
-        
+
 
     void AFN(){
         cout << " FUNÇÃO TRANSIÇÃO  |      a     |      b      " << endl;
