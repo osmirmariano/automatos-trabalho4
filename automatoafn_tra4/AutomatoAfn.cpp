@@ -6,8 +6,8 @@ class AutomatoAfn{
     public:
         string estado[4];
         string armazenaEstado[8];
-
-        string palavra;
+        string palavra, armazenamento[10];
+        int x, flag, k, b, conta;
 
     public:
         AutomatoAfn(){
@@ -16,6 +16,11 @@ class AutomatoAfn{
             estado[2] = "q2";
             estado[3] = "q3";
             this->palavra = palavra;
+            x=0;
+            flag=1;
+            k=0;
+            b=0;
+            conta=0;
         };
 
         ~AutomatoAfn();
@@ -34,6 +39,104 @@ class AutomatoAfn{
         cout << "----------------------------------------------" << endl;
         cout << "\t& --> Conjunto vazio" << endl << endl;
     };
+
+    string roda(int x, string armazenamento){
+        int y=0;
+        while(y<x){
+            estado[x] = estado[x+1];
+            y++;
+        }
+
+        while(estado[x] != armazenamento){
+            x++;
+        }
+
+        return estado[x];
+    }
+
+    void guarda(string palavra){
+        int tamanho=0;
+        tamanho = palavra.length();
+        //estado[x] = armazenamento[b];
+        //estado[x]
+        while(k < tamanho){
+            if(estado[x] == "q0"){
+                if(palavra[x] == 'a'){
+                    while(flag != 2){
+
+                            if(conta > 1){
+                                    armazenamento[b] = "q0";
+                                    conta++;
+                            }
+
+                            if(estado[x] != armazenamento[b]){
+                                //armazenamento[b] = "q0";
+                                //estado[x] = armazenamento[b];
+                                //while(estado[x] != armazenamento[b]){
+                                    //x++;
+                                //}
+                                estado[x] = roda(x, armazenamento[b]);
+                                //estado[x] = roda(estado[x], armazenamento[b]);
+                                b++;
+                            }
+                            cout << " 1.1 - {" << estado[x];
+                            //guarda(estado[x]);
+                            guarda(palavra);
+                            //b++;
+
+                            armazenamento[b] = "q1";
+                            if(estado[x] != armazenamento[b]){
+                                //estado[x] = armazenamento[b];
+                                estado[x] = roda(x, armazenamento[b]);
+
+                            }
+                            cout << "," << estado[x] << "}" << endl;;
+                            //guarda(estado[x]);
+                            flag++;
+                    }
+                    //guarda(estado[x]);
+                    guarda(palavra);
+
+                }else{
+                    if(palavra[x] == 'b'){
+                        armazenamento[b] = "q0";
+                        //estado[x] = armazenamento[b];
+                        if(estado[x] != armazenamento[b]){
+                            //estado[x] = armazenamento[b];
+                            estado[x] = roda(x, armazenamento[b]);
+
+                        }
+                        cout << " 1.2 - {" << estado[x] << "}" << endl;
+                        //guarda(estado[x]);
+                        guarda(palavra);
+                    }
+                }
+
+            }
+
+            if(estado[x] == "q1"){
+                if(palavra[x] == 'a'){
+                    armazenamento[b] = "q2";
+                    //estado[x] = armazenamento[b];
+                    if(estado[x] != armazenamento[b]){
+                        estado[x] = roda(x, armazenamento[b]);
+                    }
+                    cout << " 2.1 - {" << estado[x] << "}" << endl;
+                }else{
+                    if(palavra[x] == 'b'){
+                        armazenamento[b] = "q2";
+                        if(estado[x] != armazenamento[b]){
+                            estado[x] = roda(x, armazenamento[b]);
+                        }
+                        cout << " 2.2 - {" << estado[x] << "}" << endl;
+                    }
+                }
+            }
+            b++;
+            x++;
+            k++;
+        }
+    }
 
 
     // void funcaoTransicaoAFN(string palavra){
@@ -75,7 +178,7 @@ class AutomatoAfn{
     //                         }
     //                     }
     //                     b++;
-                        
+
     //                 }
     //                 else{
     //                     if(estado[x] == "q2"){
@@ -121,12 +224,12 @@ class AutomatoAfn{
                     while(c < 2){
                         x++;
                         if(armazenaEstado[c] == "q0"){
-                            
+
                             if(palavra[x] == 'a'){
                                 armazena[d] = "q0";
                                 d++;
                                 armazena[d] = "q1";
-                            } 
+                            }
                             else{
                                 if(palavra[x] == 'b')
                                     armazena[d] = "q0";
@@ -148,8 +251,8 @@ class AutomatoAfn{
                 }
             }
         //}
-            
-        
+
+
     }*/
-    
+
 };
