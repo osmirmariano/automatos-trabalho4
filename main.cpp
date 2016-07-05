@@ -1,152 +1,11 @@
 #include <iostream>
 #include <string>
+#include "AutomatoAFN.cpp"
+#include "Fila.cpp"
 
 using namespace std;
 
-class AutomatoAFN{
-    public:
-        typedef struct{
-            string estados;
-            char simbolo;
-        }TRANS;
 
-        typedef struct no{
-            TRANS conteudo;
-            struct no *prox;
-        }NO_FILA;
-
-        typedef struct {
-            NO_FILA *inicio;
-            NO_FILA *fim;
-        }FILA;
-
-    public:
-        AutomatoAFN(){
-            FILA *fila;
-            fila = NULL;
-            fila->inicio = NULL;
-            fila->fim = NULL;
-        }
-        ~AutomatoAFN();
-
-        //FUNÇÃO PARA MOSTRAR AFN
-        void AFN(){
-            cout << " FUNÇÃO TRANSIÇÃO  |      a     |      b      " << endl;
-            cout << "----------------------------------------------" << endl;
-            cout << "      ->qo         |  {q0, q1}  |    {qo}     " << endl;
-            cout << "----------------------------------------------" << endl;
-            cout << "        q1         |    {q2}    |    {q2}     " << endl;
-            cout << "----------------------------------------------" << endl;
-            cout << "        q2         |    {q3}    |    {q3}     " << endl;
-            cout << "----------------------------------------------" << endl;
-            cout << "       *q3         |      &     |      &      " << endl;
-            cout << "----------------------------------------------" << endl;
-            cout << "\t& --> Conjunto vazio" << endl << endl;
-        };
-
-        void criaFila (FILA *fila){
-            fila = NULL;
-        }
-
-        //INÍCIO DA FUNÇÃO ENFILEIRAR FILA
-        void enfileirar(FILA *fila, TRANS dados){
-            //NO_FILA *novo = (NO_FILA*) malloc(sizeof(NO_FILA));
-            NO_FILA *novo = new NO_FILA();
-            if(novo == NULL)
-                cout << "Nada" << endl;
-            else{
-                novo->conteudo = dados;
-                novo->prox = NULL;
-
-                if(fila->fim == NULL)
-                    fila->inicio = novo;
-                else
-                    fila->fim->prox = novo;
-                fila->fim = novo;
-            }
-        };
-
-        //INÍCIO DA FUNÇÃO DESENFILEIRAR
-        void desenfileirar(FILA *fila){
-            //NO_FILA *novo = (NO_FILA*) malloc(sizeof(NO_FILA));
-            NO_FILA *aux = new NO_FILA();
-            if(aux == NULL)
-                cout << "Nada" << endl;
-            else{
-                fila->inicio = fila->inicio->prox;
-                if(fila->inicio == NULL){
-                    fila->inicio = NULL;
-                    delete[] aux;
-                }
-                else
-                    fila->fim = fila->fim->prox;
-            }
-        }
-
-        //FUNAÇÃO DE TRANSIÇÃO
-        FILA *funcaoTransicao(string estado, char simbolo){
-            NO_FILA  *retorno = NULL;
-            if(estado == "q0"){
-                retorno->conteudo.estados = "q0";
-                if(simbolo == 'a'){
-                    retorno->conteudo.estados = "q1";
-                }
-            }
-            else if(estado == "q1"){
-                if(simbolo == 'a'){
-                    retorno->conteudo.estados = "q2";
-                }
-            }
-            else if(estado == "q2"){
-                if(simbolo == 'a'){
-                    retorno->conteudo.estados = "q3";
-                }
-            }
-        };
-
-        //FUNÇÃO DE TRANSIÇÃO ESTENDIDA
-        FILA  *funcaoTransicaoEstendida(string estado, string palavra){
-            string resto = "&";
-            char simbolo;
-            NO_FILA *retorno = "&";
-            NO_FILA *aux =  NULL;
-            NO_FILA *temp = NULL;
-
-            int tamanho = palavra.length();
-            simbolo = palavra[tamanho-1];
-            
-            if(palavra == "&")
-                return retorno;
-            //aQUI QUEBRAR resto
-            for(int x = 0; x < tamanho-2; x++){
-                resto = resto + "&";
-            }
-
-            for(int x = 0; x < tamanho-1; x++){
-                resto[x] = palavra[x];
-            }
-            aux = funcaoTransicao(estado, resto);
-            while(aux != NULL){
-                temp = funcaoTransicao(desenfileirar(aux), simbolo);
-                while(temp != NULL){
-                    enfileirar(retorno, desenfileirar(temp));
-                }   
-            }   
-            return retorno;
-        };
-        
-        //VERIFICAR SE PALAVRA PERTENCE ALFABETO
-        int verificaPalavraPertence(string palavraInformada){
-            int tamanho =  palavraInformada.length();
-            int pertence = 0;
-            for(int x = 0; x < tamanho; x++){
-                if(palavraInformada[x] != 'a' && palavraInformada[x] != 'b'){
-                    return 1;
-                }
-            }
-            return 0;
-            
-        };
 
         int main(){
             int opcao;
@@ -154,6 +13,7 @@ class AutomatoAFN{
             FILA *fila = NULL;
             
             criaFila(&fila);
+            AutomatoAFN *afn =  new AutomatoAFN();
 
             do{
                 cout << endl << "---------------------------------------------" << endl;
@@ -172,7 +32,7 @@ class AutomatoAFN{
                         cout << endl << "---------------------------------------------" << endl;
                         cout << "\t VISUALIZAÇÃO AUTÔMATO" << endl;
                         cout << "---------------------------------------------" << endl;
-                        AFN();
+                        afn->AFN();
                         break;
                     case 2:
                         cout << endl << "---------------------------------------------" << endl;
@@ -182,12 +42,12 @@ class AutomatoAFN{
                         cin >> palavraInformada;
                         cout << "---------------------------------------------" << endl;
                         estado = "q0";
-                        if(verificaPalavraPertence(palavraInformada) == 0){
-                            estado = funcaoTransicaoEstendida(&estado, palavraInformada, fila);
+                        if(afn->verificaPalavraPertence(palavraInformada) == 0){
+                            estado = afn->funcaoTransicaoEstendida(&estado, palavraInformada, fila);
                             if (estado == "q3"){
                                 cout << "---------------------------------------------" << endl;
                                 cout << " PALAVRA ACEITA PELA O AUTÔMATO!" << endl;
-                                cout << " \tESTADOS " << estado << " É FINAL" << endl;
+                                cout << " \tESTADOS " << afn->funcaoTransicaoEstendida(estado, palavra) << " É FINAL" << endl;
                                 cout << "---------------------------------------------" << endl;
                             }
                             else{
@@ -211,5 +71,3 @@ class AutomatoAFN{
             }while(opcao != 0);
             return 0;
         };
-    
-};
