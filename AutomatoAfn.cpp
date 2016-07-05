@@ -241,6 +241,10 @@ class AutomatoAfn{
                     while(c < 2){
                         x++;
                         if(armazenaEstado[c] == "q0"){
+<<<<<<< HEAD:AutomatoAfn.cpp
+=======
+
+>>>>>>> e9f785c622434e0086d79683b3e5bd232a5c2d96:automatoafn_tra4/AutomatoAfn.cpp
                             if(palavra[x] == 'a'){
                                 armazena[d] = "q0";
                                 d++;
@@ -267,6 +271,14 @@ class AutomatoAfn{
                 }
             }
         //}
+<<<<<<< HEAD:AutomatoAfn.cpp
     }*/
 
 };
+=======
+
+
+    }*/
+
+};
+>>>>>>> e9f785c622434e0086d79683b3e5bd232a5c2d96:automatoafn_tra4/AutomatoAfn.cpp
